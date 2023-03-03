@@ -1,9 +1,10 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import './Header.css';
 import Clock from '../Clock/Clock';
 
 function Header({ isHeaderShown }) {
   const [clockPosition, setClockPosition] = useState({ x: 0, y: 0 });
+  const headerRef = useRef(null);
 
   const handleClockDrag = (e) => {
     setClockPosition({
@@ -26,14 +27,25 @@ function Header({ isHeaderShown }) {
         JSON.stringify(clockPosition)
       );
     }
-  }, [isHeaderShown]);
+  }, [isHeaderShown, clockPosition]);
+
+  const headerWidth = headerRef.current ? headerRef.current.offsetWidth : 0;
+  const headerHeight = headerRef.current ? headerRef.current.offsetHeight : 0;
 
   return (
     <header
+      id="header"
+      ref={headerRef}
       className={`header${isHeaderShown ? ' header-header-shown' : ''}`}
       style={{ marginTop: isHeaderShown ? '0px' : '-100px' }}
     >
-      <Clock position={clockPosition} onDrag={handleClockDrag} isHeaderShown />
+      <Clock
+        position={clockPosition}
+        onDrag={handleClockDrag}
+        isHeaderShown={isHeaderShown}
+        width={headerWidth}
+        height={headerHeight}
+      />
     </header>
   );
 }

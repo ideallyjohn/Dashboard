@@ -1,27 +1,30 @@
-import React, { useState, useEffect } from 'react';
-import './Clock.css';
+import { useState, useEffect } from 'react';
 
-function Clock({ isHeaderShown }) {
-  const [position, setPosition] = useState({
-    x: window.innerWidth / 2,
-    y: 50,
-  });
-
-  useEffect(() => {
-    if (!isHeaderShown) {
-      localStorage.setItem('clockPosition', JSON.stringify(position));
-    }
-  }, [isHeaderShown, position]);
+function Clock({ position, onDrag, isHeaderShown, headerWidth, headerHeight }) {
+  const [clockPosition, setClockPosition] = useState(position);
 
   const handleMouseDown = (e) => {
-    const startX = e.pageX - position.x;
-    const startY = e.pageY - position.y;
+    const clockWidth = 200;
+    const clockHeight = 200;
+    const headerRect = document
+      .getElementById('header')
+      .getBoundingClientRect();
+
+    const minX = headerRect.left + clockWidth / 2;
+    const maxX = headerRect.right - clockWidth / 2;
+    const minY = headerRect.top + clockHeight / 2;
+    const maxY = headerRect.bottom - clockHeight / 2;
+
+    const startX = e.pageX - clockPosition.x;
+    const startY = e.pageY - clockPosition.y;
 
     const handleMouseMove = (e) => {
-      setPosition({
-        x: e.pageX - startX,
-        y: e.pageY - startY,
-      });
+      const newClockPosition = {
+        x: Math.max(minX, Math.min(e.pageX - startX, maxX)),
+        y: Math.max(minY, Math.min(e.pageY - startY, maxY)),
+      };
+
+      setClockPosition(newClockPosition);
     };
 
     const handleMouseUp = () => {
@@ -33,12 +36,31 @@ function Clock({ isHeaderShown }) {
     document.addEventListener('mouseup', handleMouseUp);
   };
 
+  useEffect(() => {
+    if (!isHeaderShown) {
+      localStorage.setItem('clockPosition', JSON.stringify(clockPosition));
+    }
+  }, [isHeaderShown, clockPosition]);
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setClockPosition((prevPosition) => ({ ...prevPosition }));
+    }, 1000);
+    return () => clearInterval(interval);
+  }, []);
+
   if (!isHeaderShown) {
     const savedPosition = localStorage.getItem('clockPosition');
     if (savedPosition) {
       const { x, y } = JSON.parse(savedPosition);
       return (
-        <div className="clock clock-hidden" style={{ top: y, left: x }}></div>
+        <div
+          className="clock-hidden clock-text"
+          style={{ top: position.y, left: position.x }}
+          onMouseDown={handleMouseDown}
+        >
+          {new Date().toLocaleTimeString()}
+        </div>
       );
     }
     return null;
@@ -46,11 +68,11 @@ function Clock({ isHeaderShown }) {
 
   return (
     <div
-      className="clock"
-      style={{ top: position.y, left: position.x }}
+      className="clock-test clock-show clock-text"
+      style={{ top: clockPosition.y, left: clockPosition.x }}
       onMouseDown={handleMouseDown}
     >
-      <div className="clock-text">{new Date().toLocaleTimeString()}</div>
+      {new Date().toLocaleTimeString()}
     </div>
   );
 }
