@@ -1,0 +1,12 @@
+.columns {
+  display: flex;
+  height: 100vh;
+  justify-content: space-between;
+  background-color: #f5f5f5;
+  border: 1px solid red;
+  margin-top: var(--column-margin-top);
+}
+
+.columns-header-shown {
+  margin-top: 200px;
+}

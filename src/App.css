@@ -1,114 +1,47 @@
-.settings-button {
-  position: fixed;
-  bottom: 20px;
-  right: 20px;
-  width: 50px;
-  height: 50px;
-  border-radius: 50%;
-  background-color: white;
-  box-shadow: 0px 3px 10px rgba(0, 0, 0, 0.3);
+body {
+  height: 100vh;
   display: flex;
-  justify-content: center;
-  align-items: center;
-  cursor: pointer;
-  opacity: 0.7;
-  transition: opacity 0.2s ease-in-out;
-}
-
-.settings-button:hover {
-  opacity: 1;
-}
-
-.settings-container {
-  position: absolute;
-  z-index: 999;
-}
-
-.modal-container {
-  display: none;
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background-color: rgba(0, 0, 0, 0.5);
-  z-index: 999;
-}
-
-.modal-container.show {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-.modal {
-  position: relative;
-  background-color: #fff;
-  width: 500px;
-  max-width: 100%;
-  border-radius: 4px;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
-}
-
-.modal-header {
-  padding: 1rem;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  border-bottom: 1px solid #ccc;
-}
-
-.modal-header h2 {
+  flex-direction: column;
   margin: 0;
 }
 
-.close-btn {
-  border: none;
-  background-color: transparent;
-  font-size: 1.5rem;
-  cursor: pointer;
-}
-
-.modal-body {
-  padding: 1rem;
-}
-
-.form-group {
-  margin-bottom: 1rem;
-}
-
-.form-group label {
-  display: block;
-  font-weight: bold;
-}
-
-.form-group input[type='checkbox'] {
-  margin-right: 0.5rem;
-}
-
-.modal-footer {
-  padding: 1rem;
+.App {
   display: flex;
-  align-items: center;
-  justify-content: flex-end;
-  border-top: 1px solid #ccc;
+  flex-direction: column;
 }
 
-.cancel-btn {
-  border: none;
-  background-color: #ccc;
-  color: #fff;
-  padding: 0.5rem 1rem;
-  margin-right: 0.5rem;
-  border-radius: 4px;
-  cursor: pointer;
+/* Hide scrollbar in all browsers */
+::-webkit-scrollbar {
+  width: 5px;
+  height: 5px;
+  background-color: #F5F5F5;
 }
 
-.save-btn {
-  border: none;
-  background-color: #007bff;
-  color: #fff;
-  padding: 0.5rem 1rem;
-  border-radius: 4px;
-  cursor: pointer;
+/* Define scrollbar thumb styles */
+::-webkit-scrollbar-thumb {
+  background-color: #dddddd;
+  border-radius: 5px;
+}
+
+/* Define scrollbar track styles */
+::-webkit-scrollbar-track {
+  background-color: #F5F5F5;
+}
+
+/* Hide scrollbar arrows in IE 10+ */
+::-ms-scrollbar {
+  width: 5px;
+  height: 5px;
+  background-color: #F5F5F5;
+}
+
+/* Define scrollbar thumb styles in IE 10+ */
+::-ms-scrollbar-thumb {
+  background-color: #A9A9A9;
+  border-radius: 5px;
+}
+
+/* Define scrollbar track styles in IE 10+ */
+::-ms-scrollbar-track {
+  background-color: #F5F5F5;
 }
